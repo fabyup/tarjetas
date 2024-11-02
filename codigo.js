@@ -1,5 +1,3 @@
-// Asegúrate de que tu archivo Servicio.js esté cargado antes de este archivo
-
 document.addEventListener("DOMContentLoaded", () => {
   const servicios = [
     new ServicioCerrajero(

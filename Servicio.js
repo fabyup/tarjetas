@@ -1,5 +1,3 @@
-// Aquí puedes añadir lógica adicional para servicios específicos
-// Por ejemplo, mostrar diferentes servicios de cerrajería
 class ServicioCerrajero {
   constructor(nombre, descripcion, imagen) {
     this.nombre = nombre;
