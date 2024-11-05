@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     new ServicioCerrajero(
       "Apertura de puertas",
       "Servicio rápido y eficiente para abrir cualquier tipo de puerta.",
-      "istockphoto-1357874479-612x612.jpg"
+      "abriendo puerta 1.jpg"
     ),
     new ServicioCerrajero(
       "Cambio de cerraduras",
@@ -27,12 +27,53 @@ document.addEventListener("DOMContentLoaded", () => {
     )
   ];
 
+  const contenedor = document.querySelector("#tarjetas-inner");
+  let tarjetaActual = 0;
+  let modoVista = "individual"; // Inicialmente en modo individual
+
   const agregarTarjetas = () => {
-    const contenedor = document.querySelector(".tarjetas-container");
     servicios.forEach(servicio => {
       contenedor.appendChild(servicio.crearTarjeta());
     });
+    mostrarTarjetaActual(); // Mostrar la primera tarjeta al final
   };
+
+  const mostrarTarjetaActual = () => {
+    if (modoVista === "individual") {
+      // Ajusta el contenedor para mostrar solo una tarjeta
+      contenedor.style.width = "100%"; // Asegúrate de que el contenedor sea del 100%
+      contenedor.style.transform = `translateX(-${tarjetaActual * 100}%)`;
+    } else {
+      // Cambia la transformación y el ancho del contenedor para mostrar todas las tarjetas
+      contenedor.style.transform = `translateX(0)`;
+      contenedor.style.width = "auto"; // Se adapta al tamaño de las tarjetas
+    }
+  };
+
+  const nextTarjeta = () => {
+    if (modoVista === "individual") {
+      tarjetaActual = (tarjetaActual + 1) % servicios.length; // Ciclo al principio si se pasa de la última
+      mostrarTarjetaActual();
+    }
+  };
+
+  const prevTarjeta = () => {
+    if (modoVista === "individual") {
+      tarjetaActual = (tarjetaActual - 1 + servicios.length) % servicios.length; // Ciclo al final si se va a la anterior
+      mostrarTarjetaActual();
+    }
+  };
+
+  const toggleView = () => {
+    modoVista = modoVista === "individual" ? "todas" : "individual";
+    document.getElementById("toggle-view").textContent =
+      modoVista === "individual" ? "Ver todas" : "Ver de a una";
+    mostrarTarjetaActual(); // Actualizar la vista
+  };
+
+  document.getElementById("next").addEventListener("click", nextTarjeta);
+  document.getElementById("prev").addEventListener("click", prevTarjeta);
+  document.getElementById("toggle-view").addEventListener("click", toggleView);
 
   agregarTarjetas();
 });
